@@ -3,8 +3,7 @@ const Forbidden = require('../errors/forbidden');
 const { CREATED } = require('../utils/constants');
 const Movie = require('../models/movie');
 
-const getMovies = (req, res, next) => Movie.find({})
-  .populate(['owner'])
+const getMovies = (req, res, next) => Movie.find({ owner: req.user._id })
   .then((cards) => res.send({ data: cards }))
   .catch(next);
 
