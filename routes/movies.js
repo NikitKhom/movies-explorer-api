@@ -15,7 +15,7 @@ movieRouter.post('/', celebrate({
     director: Joi.string().required().min(2).max(30),
     duration: Joi.number().integer().required(),
     year: Joi.number().integer().min(1895).max(currentYear),
-    description: Joi.string().required().min(2).max(100),
+    description: Joi.string().required().min(2).max(1000),
     image: Joi.string().required().pattern(REGEXP_LINK),
     trailer: Joi.string().required().pattern(REGEXP_LINK),
     nameRU: Joi.string().required().min(2).max(30),
