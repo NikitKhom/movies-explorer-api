@@ -1,5 +1,6 @@
 const NotFoundError = require('../errors/not-found-error');
 const Forbidden = require('../errors/forbidden');
+const Conflict = require('../errors/conflict');
 const { CREATED } = require('../utils/constants');
 const Movie = require('../models/movie');
 
@@ -37,7 +38,13 @@ const createMovie = (req, res, next) => {
     owner,
   })
     .then((card) => res.status(CREATED).send({ data: card }))
-    .catch(next);
+    .catch((err) => {
+      if (err.code === 11000) {
+        next(new Conflict('Карточка уже существует'));
+        return;
+      }
+      next(err);
+    });
 };
 
 const deleteMovie = (req, res, next) => {
